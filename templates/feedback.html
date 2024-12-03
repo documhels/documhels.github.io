@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="static/urve.png"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Users/mheldustinchua/Documents/SoftwareEng-Proj/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Home - Eatery Recommendation</title>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Restaurants</a></li>
+            <li><a href="#">Recommendations</a></li>
+            <li><a href="/Users/mheldustinchua/Documents/SoftwareEng-Proj/templates/feedback.html">Feedback</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+
+            <!-- Profile Section -->
+            <li class="profile-item">
+                <img src="static/eatlog.png" alt="Profile Icon" class="profile-icon">
+                <a href="#" id="account-link">
+                    <span>{{ user_name if user_name else 'My Account' }}</span>
+                </a>
+                {% if user_name %}
+                <ul class="dropdown" id="account-dropdown">
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+    <div class = "feedback-box">
+        <h1>Enter Feedback</h1>
+        <input type="text" name="Feedback" class="input-field" placeholder="Feedback" required>
+    </div>
+
+</body>
+</html>

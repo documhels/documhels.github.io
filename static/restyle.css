@@ -1,0 +1,433 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Verdana', sans-serif;
+    margin: 0;
+    padding-top: 60px; /* Account for fixed navbar height */
+    background: #f3f7f1;
+    color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: green;
+    padding: 10px 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Aligns content vertically */
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;  /* Centers the nav items horizontally */
+    align-items: center;      /* Aligns nav items vertically */
+    padding: 0;               /* Removes default padding */
+    margin: 0;                /* Removes default margin */
+}
+
+.navbar ul li {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* Links */
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+/* Hover Effect */
+.navbar ul li a:hover {
+    background-color: white;
+    color: green;
+    border-radius: 15px; /* Rounded corners on hover */
+}
+
+/* Profile Section */
+.profile-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Only highlight the username on hover */
+.profile-item a.username-link {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+/* Hover Effect for Username */
+.profile-item a.username-link:hover {
+    background-color: white;
+    color: green;
+    border-radius: 15px; /* Rounded corners on hover */
+}
+
+/* Active Effect for Username (when clicked) */
+.profile-item a.username-link:active {
+    background-color: white; /* Keep the same color when clicked */
+    color: green;            /* Keep the text color */
+    border-radius: 0;       /* Square corners when clicked */
+}
+
+#account-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; /* Position it below the profile name */
+    right: 0;
+    border-radius: 15px;
+    background-color: white;
+    list-style-type: none;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+#account-dropdown li {
+    padding: 10px;
+}
+
+#account-dropdown li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#account-dropdown li a:hover {
+    border-radius: 15px;
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown on hover or when clicking username */
+.profile-item:hover #account-dropdown {
+    display: block; /* Display dropdown on hover */
+}
+
+#account-dropdown {
+    display: none; /* Hidden by default */
+}
+
+/* Only show dropdown when hovered over the profile-item */
+.profile-item:hover #account-dropdown,
+#account-dropdown:hover {
+    display: block;
+}
+/* Section Styling */
+.section {
+    padding: 60px 20px 20px;  /* Adjust top padding to push the content down slightly */
+    min-height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column; /* Stack the content vertically */
+    align-items: center; /* Center content horizontally */
+    justify-content: flex-start; /* Align content to the top */
+}
+
+/* Title Styling */
+h1 {
+    font-size: 2em;
+    color: green;
+    margin-bottom: 40px;  /* Increased margin to create space between title and restaurant list */
+    margin-top: 0;  /* Removed default top margin */
+    padding-top: 10px;  /* Added padding to adjust the distance from the navbar */
+    text-align: center;  /* Center align the title */
+}
+
+/* Restaurants Container Styling */
+.restaurants-container {
+    width: 80%;  /* Set width for proper alignment */
+    display: grid;  /* Switch to grid layout */
+    grid-template-columns: repeat(2, 1fr);  /* Creates two equal columns */
+    gap: 20px;  /* Adds space between the columns */
+    margin-top: 30px;  /* Added margin-top to create more space below the title */
+    text-align: center;
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+    .restaurants-container {
+        grid-template-columns: 1fr; /* One column on smaller screens */
+    }
+}
+/* Restaurant Card Styling */
+.restaurant-card {
+    background-color: white;
+    border-radius: 15px; /* Rounded corners for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* To maintain rounded corners and hide the overflow */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add smooth transition for hover effect */
+    display: flex;
+    flex-direction: column; /* Stack image and label vertically */
+    height: 300px; /* Set the height of the cards */
+    cursor: pointer;
+    position: relative; /* For positioning the label container */
+}
+
+/* Restaurant Image Styling */
+.restaurant-card img {
+    width: 100%;
+    height: 100%; /* Image occupies the full height of the card */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+/* Restaurant Name Styling */
+.restaurant-card .name a {
+    color: green;  /* Set the restaurant name to green */
+    text-decoration: none;  /* Remove underline from the link */
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+/* Hover Effect for Restaurant Name */
+.restaurant-card .name a:hover {
+    color: darkgreen;  /* Darker green on hover */
+}
+
+.restaurant-card .name {
+    position: absolute;
+    bottom: 0; /* Attach label to the bottom */
+    width: 100%; /* Ensure it spans the card's width */
+    padding: 10px;
+    font-size: 1.2em; /* Larger text size */
+    color: green; /* Green text for better emphasis */
+    text-align: center;
+    font-weight: bold;
+
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background */
+    backdrop-filter: blur(10px); /* Adds a stronger blur effect for better contrast */
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-top-left-radius: 15px; /* Curve aligns with card's rounded corners */
+    border-top-right-radius: 15px;
+}
+
+/* Hover Effect for Cards */
+.restaurant-card:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Heart Icon Styling */
+.restaurant-card .name i {
+    font-size: 24px;
+    color: red;  /* Red color for the heart */
+    transition: color 0.3s ease, transform 0.3s;
+    cursor: pointer;
+}
+
+.restaurant-card .name i:hover {
+    transform: scale(1.2);  /* Slight zoom effect on hover */
+    color: #ff4d4d;  /* Lighter red on hover */
+}
+/* Styling for category titles */
+.category-title {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: #28a745; /* Green color */
+}
+
+/* Centering the "See Reviews" button */
+.restaurant-reviews {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.see-reviews {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745; /* Green color */
+    color: white;
+    text-decoration: none;
+    border-radius: 20px; /* Rounded corners */
+    font-size: 16px;
+    border: 1px solid #28a745;
+}
+
+.see-reviews:hover {
+    background-color: white;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+/* Styling for category titles */
+.category-title {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: #28a745; /* Grab green */
+}
+
+/* Menu item styling */
+.menu-item {
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 15px; /* Space inside the box */
+    margin: 10px 0; /* Space between items */
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-between; /* Space between name and price */
+    align-items: center; /* Align content vertically */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Menu name styling */
+.menu-item .menu-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333; /* Dark text */
+}
+
+/* Price styling */
+.menu-item .price {
+    font-size: 1em;
+    color:grey; /* Green text */
+    font-weight:normal;
+}
+
+/* Container for category items */
+.category-items {
+    margin-bottom: 20px;
+}
+
+/* Back button styling */
+.back-btn {
+    padding: 8px 15px;
+    color: green;
+    text-decoration: none;
+    border-radius: 20px; /* Rounded button */
+    font-size: 14px;
+    border: 1px solid #28a745;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+/* Back button hover effect */
+.back-btn:hover {
+    background-color: white;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+
+/* Optional: Responsive Styles */
+@media (max-width: 768px) {
+    .menu-item {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: flex-start;
+    }
+
+    .menu-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-header h1 {
+        font-size: 1.6em;
+    }
+
+    .back-btn {
+        margin-top: 10px;
+    }
+}
+
+.favorite-btn {
+    position: absolute; /* Position the button in front of the card */
+    top: 10px;
+    right: 10px;
+    z-index: 10; /* Ensure it is above other content */
+}
+/* Style for the heart icon */
+.restaurant-card .favorite-btn i {
+    font-size: 24px; /* Adjust size of heart icon */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+/* If the heart is favorited (red) */
+.restaurant-card .favorite-btn i.favorited {
+    color: red;
+}
+
+/* If the heart is not favorited (gray) */
+.restaurant-card .favorite-btn i {
+    color: gray; /* Default color for unfavorited */
+}
+
+/* Optional: Hover effect for the heart icon */
+.restaurant-card .favorite-btn i:hover {
+    color: #ff4d4d; /* Lighter red when hovered */
+}
+
+/* Sorting Dropdown Styling */
+.sorting-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sorting-container label {
+    font-size: 1em;
+    color: green;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#sort-options {
+    padding: 8px 15px;
+    font-size: 1em;
+    border: 1px solid green;
+    border-radius: 20px;
+    background-color: #f3f7f1; /* Matches body background */
+    color: #333;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+#sort-options:hover {
+    background-color: green;
+    color: white;
+}
+
+#sort-options:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Subtle glow on focus */
+}
+
+/* For mobile view */
+@media (max-width: 768px) {
+    .sorting-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #sort-options {
+        margin-top: 10px;
+    }
+}

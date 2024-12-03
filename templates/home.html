@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='urve.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title> Home - Eatery Recommendation</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('restaurant') }}">Restaurants</a></li>
+            <li><a href="/recommendation">Recommendations</a></li>
+            <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+
+            <!-- Profile Section -->
+            <li class="profile-item">
+                <img src="{{ url_for('static', filename='eatlog.png') }}" alt="Profile Icon" class="profile-icon">
+                <a href="#" id="account-link">
+                    <span>{{ user_name if user_name else 'My Account' }}</span>
+                </a>
+                {% if user_name %}
+                <ul class="dropdown" id="account-dropdown">
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="intro-container">
+            <div class="text-content">
+                <h1>Welcome to the Eatery Recommendation System</h1>
+                <p>Discover hidden food gems around De La Salle University Dasmarinas. Whether you're looking for good quality or a full meal, we've got you!</p>
+                <a href="{{ url_for('restaurant') }}" class="discover-btn">Discover Now</a>
+            </div>
+
+            <!-- Bouncing Logo -->
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='urve.png') }}" alt="Logo" class="bouncing-logo">
+            </div>
+        </div>
+
+        <section id="top-rated-restaurants" class="section">
+            <div class="curved-box">
+                <h2>Top 5 Rated Restaurants</h2>
+                <div class="restaurants-list">
+                    {% if top_restaurants %}
+                        {% for restaurant in top_restaurants %}
+                        <div class="restaurant-card">
+                            <img src="{{ url_for('static', filename=restaurant['image_path']) }}" alt="{{ restaurant['name'] }}">
+                            <div class="restaurant-info">
+                                <h3>{{ restaurant['name'] }}</h3>
+                                <p>Rating: {{ restaurant['average_rating']|round(1) }}/5</p>
+                                <a href="{{ url_for('menu', restaurant_id=restaurant['restaurant_id']) }}" class="view-more">View More</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No top-rated restaurants found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        
+    
+    </div>
+
+    <script>
+        document.getElementById('account-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('account-dropdown');
+            if (dropdown) {
+                dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "block" : "none";
+            }
+        });
+    </script>
+
+</body>
+</html>

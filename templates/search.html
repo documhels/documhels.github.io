@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='urve.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Search - Eatery Recommendation</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('restaurant') }}">Restaurants</a></li>
+            <li><a href="/recommendation">Recommendations</a></li>
+            <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+
+            <!-- Profile Section -->
+            <li class="profile-item">
+                <img src="{{ url_for('static', filename='eatlog.png') }}" alt="Profile Icon" class="profile-icon">
+                <a href="#" id="account-link">
+                    <span>{{ user_name if user_name else 'My Account' }}</span>
+                </a>
+                {% if user_name %}
+                <ul class="dropdown" id="account-dropdown">
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    <script>
+        document.getElementById('account-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('account-dropdown');
+            if (dropdown) {
+                dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "block" : "none";
+            }
+        });
+    </script>
+
+    <div class="search-container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Enter a restaurant name and press Enter" onkeydown="if(event.key === 'Enter') searchRestaurants()">
+        <form id="search-form" method="POST" action="{{ url_for('search') }}" style="display: inline;">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    <!-- Display search results -->
+<div id="results-container">
+    {% if restaurants %}
+        {% for restaurant in restaurants %}
+            <div class="restaurant-item">
+                <a href="{{ url_for('menu', restaurant_id=restaurant.id) }}">
+                    <h3>{{ restaurant.name }}</h3>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p id="no-results">Sorry, no restaurants match your search.</p>
+    {% endif %}
+</div>
+<script>
+    // Handle form submission with AJAX
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const query = document.getElementById('search-bar').value;
+        const resultsContainer = document.getElementById('results-container');
+
+        fetch('{{ url_for("search") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `query=${encodeURIComponent(query)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultsContainer.innerHTML = ''; // Clear previous results
+            if (data.length > 0) {
+                data.forEach(restaurant => {
+                    // Create a div for each restaurant
+                    const div = document.createElement('div');
+                    div.classList.add('restaurant-item');
+                    
+                    // Create a clickable link for each restaurant item
+                    const link = document.createElement('a');
+                    link.href = `/menu/${restaurant.id}`; // URL to the restaurant's menu page
+                    link.classList.add('green-link'); // Add the green-link class
+                    link.innerHTML = `<h3>${restaurant.name}</h3>`;
+
+                    // Append the link to the div
+                    div.appendChild(link);
+
+                    // Append the div to the results container
+                    resultsContainer.appendChild(div);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p id="no-results">Sorry, no restaurants match your search.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+
+</body>
+</html>

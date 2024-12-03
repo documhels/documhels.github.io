@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='urve.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fave.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Favorites - Eatery Recommendation</title>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('restaurant') }}">Restaurants</a></li>
+        <li><a href="/recommendation">Recommendations</a></li>
+        <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+        <li><a href="{{ url_for('search') }}">Search</a></li>
+
+        <!-- Profile Section -->
+        <li class="profile-item">
+            <img src="{{ url_for('static', filename='eatlog.png') }}" alt="Profile Icon" class="profile-icon">
+            <a href="#" id="account-link">
+                <span>{{ user_name if user_name else 'My Account' }}</span>
+            </a>
+            {% if user_name %}
+            <ul class="dropdown" id="account-dropdown">
+                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            </ul>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+<section id="favorites" class="section">
+    <h1>Your Favorite Restaurants</h1>
+    <div class="restaurants-container">
+        {% for favorite in favorites %}
+            <div class="restaurant-card">
+                {% if favorite[2] %}
+                    <img src="{{ url_for('static', filename=favorite[2]) }}" alt="{{ favorite[1] }}">
+                {% endif %}
+                <div class="name">
+                    <a href="{{ url_for('menu', restaurant_id=favorite[0]) }}?from=favorites" class="restaurant-link">{{ favorite[1] }}</a>
+                </div>
+                <!-- Heart Button (moved outside the .name div) -->
+                <div class="favorite-btn">
+                    <i 
+                        class="fas fa-heart favorited" 
+                        data-restaurant-id="{{ favorite[0] }}" 
+                        data-favorited="true" 
+                        style="cursor: pointer; color: red;"> 
+                    </i>
+                </div>
+                
+            </div>
+        {% else %}
+            <p>You haven't liked any restaurants yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    // Handle heart button click
+    document.querySelectorAll('.fa-heart').forEach(heart => {
+        heart.addEventListener('click', async function () {
+            const restaurantId = this.dataset.restaurantId;
+            const isFavorited = this.dataset.favorited === 'true';
+
+            try {
+                // Send POST or DELETE request based on current state
+                const response = await fetch('/restaurants', {
+                    method: isFavorited ? 'DELETE' : 'POST',  // Toggle based on current state
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ restaurant_id: restaurantId }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Toggle the heart color and favorited state
+                    if (isFavorited) {
+                        this.style.color = 'gray';  // Turn the heart gray (unfavorited)
+                        this.dataset.favorited = 'false';
+                    } else {
+                        this.style.color = 'red';   // Turn the heart red (favorited)
+                        this.dataset.favorited = 'true';
+                    }
+                } else {
+                    console.error(result.error || 'Failed to update favorite status');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

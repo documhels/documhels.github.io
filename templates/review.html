@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='urve.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Review - {{ restaurant_name }} - Eatery Recommendation</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('restaurant') }}">Restaurants</a></li>
+            <li><a href="/recommendation">Recommendations</a></li>
+            <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+
+            <!-- Profile Section -->
+            <li class="profile-item">
+                <img src="{{ url_for('static', filename='eatlog.png') }}" alt="Profile Icon" class="profile-icon">
+                <a href="#" id="account-link">
+                    <span>{{ user_name if user_name else 'My Account' }}</span>
+                </a>
+                {% if user_name %}
+                <ul class="dropdown" id="account-dropdown">
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Review Container -->
+    <div class="review-container">
+        <!-- Back Button -->
+        <a href="{{ url_for('menu', restaurant_id=restaurant_id) }}" class="back-btn">Back to {{ restaurant_name }} Menu</a>
+
+        <h2>Rate Your Dining Experience in {{ restaurant_name }}</h2>
+
+        <!-- Rating and Review Form -->
+        <form method="POST">
+            <div class="stars submitting-stars">
+                <span data-value="1" class="star">&#9733;</span>
+                <span data-value="2" class="star">&#9733;</span>
+                <span data-value="3" class="star">&#9733;</span>
+                <span data-value="4" class="star">&#9733;</span>
+                <span data-value="5" class="star">&#9733;</span>
+            </div>
+
+            <!-- Hidden input field to store rating -->
+            <input type="hidden" name="rating" id="rating-input" value="0">
+
+            <textarea id="review-text" name="review_text" placeholder="Write about your dining experience..." rows="5"></textarea>
+            <button type="submit" id="submit-btn">Submit Your Review</button>
+        </form>
+
+        <!-- Display Reviews Section -->
+<div class="previous-reviews">
+    <h3>Customer Reviews:</h3>
+
+    <!-- Sorting Dropdown -->
+<div class="sort-reviews">
+    <label for="sort-select">Sort reviews:</label>
+    <select id="sort-select" onchange="window.location.href='/review/{{ restaurant_id }}?sort=' + this.value;">
+        <option value="all" {% if sort_type == 'all' %}selected{% endif %}>All</option>
+        <option value="positive" {% if sort_type == 'positive' %}selected{% endif %}>Positive</option>
+        <option value="neutral" {% if sort_type == 'neutral' %}selected{% endif %}>Neutral</option>
+        <option value="negative" {% if sort_type == 'negative' %}selected{% endif %}>Negative</option>
+    </select>
+</div>
+
+    {% if reviews %}
+        <div class="reviews-list" id="reviews-list">
+            {% for review in reviews %}
+                <div class="review-item" data-sentiment="{{ review[3] }}"> <!-- Add sentiment as data attribute -->
+                    <div class="review-header">
+                        <img src="{{ url_for('static', filename='userid.png') }}" alt="User Logo" class="user-logo">
+                        <span class="username">{{ review[0] }}</span> <!-- user_name from review -->
+                        <div class="review-stars">
+                            {% for i in range(5) %}
+                                <span class="star {% if i < review[1] %}selected{% endif %}">&#9733;</span> <!-- Rating -->
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="review-text">{{ review[2] }}</p> <!-- review_text -->
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No reviews yet. Be the first to leave a review!</p>
+    {% endif %}
+</div>
+
+
+    <!-- JavaScript for Star Rating and Form Validation -->
+    <script>
+        const stars = document.querySelectorAll('.submitting-stars .star');
+        const reviewText = document.getElementById('review-text');
+        const submitButton = document.getElementById('submit-btn');
+        const ratingInput = document.getElementById('rating-input');
+        let rating = 0;
+
+        // Handle star click to select rating
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                rating = index + 1;
+                ratingInput.value = rating; // Set the rating value in hidden input
+                stars.forEach((s, i) => {
+                    s.classList.toggle('selected', i < rating);
+                });
+            });
+        });
+
+        // Handle submit button click with validation
+        submitButton.addEventListener('click', (event) => {
+            const review = reviewText.value.trim();
+            if (rating === 0) {
+                alert('Please select a rating!');
+                event.preventDefault(); // Prevent form submission
+            } else if (review === '') {
+                alert('Please write a review!');
+                event.preventDefault(); // Prevent form submission
+            }
+    
+        });
+        function sortReviews() {
+            const sortValue = document.getElementById('sort-select').value;
+            window.location.href = `/review/{{ restaurant_id }}?sort=${sortValue}`;
+        }
+    </script>
+
+</body>
+</html>

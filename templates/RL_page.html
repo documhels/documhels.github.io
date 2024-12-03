@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="static/urve.png"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/RL_style.css">
+    <title>Eatery Recommendation</title>
+</head>
+
+<body>
+
+    <div class="container" id="main">
+        <div class="sign-up">
+            <form id="registerForm" action="{{ url_for('RL_page') }}" method="POST">
+                <h1>Create an Account</h1>
+                <input type="text" name="name" class="input-field" placeholder="Name" required>
+                <input type="email" name="email" class="input-field" placeholder="Email" required>
+                <!-- Error message for email already registered -->
+                {% if email_error %}
+                    <div class="error-message">{{ email_error }}</div>
+                {% endif %}
+                <input type="password" name="password" class="input-field" placeholder="Password" required>
+                <button type="submit" name="action" value="register">Sign-Up</button>
+            </form> 
+        </div>
+        
+        <div class="sign-in">
+            <form action="{{ url_for('RL_page') }}" method="POST">
+                <h1>Log In to Your Account</h1>
+                <input type="email" name="email" class="input-field" placeholder="Email" required>
+                <input type="password" name="password" class="input-field" placeholder="Password" required>
+                <!-- Error message for wrong password -->
+                {% if login_error %}
+                    <div class="error-message">{{ login_error }}</div>
+                {% endif %}
+                <button type="submit" name="action" value="login">Sign In</button>
+            </form> 
+        </div>
+
+        <div class="overlay-container"> 
+            <div class="overlay">
+                <div class="overlay-left">
+                    <h1>Welcome Back, Foodie!</h1>
+                    <p>Let’s continue exploring the best eats around De La Salle University-Dasmarinas!</p>
+                    <button id="signIn" aria-label="Sign In">Sign In</button>
+                </div>
+                <div class="overlay-right">
+                    <h1>Welcome to the Foodie Community!</h1>
+                    <p>Sign up to uncover hidden gems around De La Salle University-Dasmarinas.</p>
+                    <button id="signUp" aria-label="Sign Up">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('main');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    </script>
+
+</body>
+</html>

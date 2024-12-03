@@ -1,0 +1,416 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Verdana', sans-serif;
+    margin: 0;
+    padding-top: 60px; /* Account for fixed navbar height */
+    background: #f3f7f1;
+    color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: green;
+    padding: 10px 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Aligns content vertically */
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;  /* Centers the nav items horizontally */
+    align-items: center;      /* Aligns nav items vertically */
+    padding: 0;               /* Removes default padding */
+    margin: 0;                /* Removes default margin */
+}
+
+.navbar ul li {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* Links */
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+/* Hover Effect */
+.navbar ul li a:hover {
+    background-color: white;
+    color: green;
+    border-radius: 15px; /* Rounded corners on hover */
+}
+
+/* Profile Section */
+.profile-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Only highlight the username on hover */
+.profile-item a.username-link {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+/* Hover Effect for Username */
+.profile-item a.username-link:hover {
+    background-color: white;
+    color: green;
+    border-radius: 15px; /* Rounded corners on hover */
+}
+
+/* Active Effect for Username (when clicked) */
+.profile-item a.username-link:active {
+    background-color: white; /* Keep the same color when clicked */
+    color: green;            /* Keep the text color */
+    border-radius: 0;       /* Square corners when clicked */
+}
+
+/* Dropdown styling */
+#account-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border-radius: 15px;
+    background-color: white;
+    list-style-type: none;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+#account-dropdown li {
+    padding: 10px;
+}
+
+#account-dropdown li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#account-dropdown li a:hover {
+    border-radius: 15px;
+    background-color: #f0f0f0;
+}
+
+/* Logout Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 10px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+/* Review Container */
+.review-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Allow content to grow naturally */
+    width: 100vw;
+    background: #f7f7f7;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Allow the button to move with content */
+    text-align: center;
+}
+
+/* Heading */
+h2 {
+    margin-bottom: 30px;
+    color: green;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Submit Review Stars */
+.submitting-stars {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.submitting-stars .star {
+    font-size: 35px;
+    cursor: pointer;
+    color: #d1d1d1;
+    transition: color 0.3s;
+}
+
+.submitting-stars .star.selected,
+.submitting-stars .star:hover {
+    color: rgb(234, 221, 37); /* Golden color for selected or hovered */
+}
+
+/* Textarea Styling */
+textarea {
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    background: #f9f9f9;
+    resize: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+/* Textarea Focus */
+textarea:focus {
+    border-color: #46b546;
+    outline: none;
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 15px;
+    background: green;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* Button Hover */
+button:hover {
+    background: #1e4720;
+}
+
+
+/* Previous Reviews Section */
+.previous-reviews {
+    margin-top: 40px;
+    text-align: left;
+    color: #333;
+    width: 100%;
+}
+
+/* Customer Reviews Title */
+.previous-reviews h3 {
+    color: green; /* Set the text color to green */
+    font-size: 24px; /* Adjust the font size if needed */
+    font-weight: bold; /* Make the title bold */
+    margin-bottom: 10px; /* Add 1-inch space below the title */
+}
+
+/* Individual Review */
+.review-item {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Profile Section */
+.profile-item {
+    display: flex;
+    align-items: center;  /* Align items (image and text) horizontally */
+    gap: 5px;  /* Add a small space between image and text */
+}
+
+/* User Logo (Image) */
+.user-logo {
+    width: 30px; /* Make the image small */
+    height: 30px; /* Ensure the height is the same as the width */
+    border-radius: 50%; /* Make it circular like a profile picture */
+    object-fit: cover; /* Ensure the image fits inside the circle without distortion */
+    margin-right: 5px;  /* Add a small gap between the image and the text */
+}
+
+/* Username Link */
+.username-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Review Rating Inline with Username */
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.review-header .username {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Review Stars */
+.review-stars {
+    display: flex;
+    gap: 5px; /* Reduce gap between stars */
+}
+
+.review-stars .star {
+    font-size: 1.5rem;
+    color: #d1d1d1; /* Light grey color */
+}
+
+.review-stars .star.selected {
+    color: rgb(234, 221, 37); /* Golden color for selected stars */
+}
+
+/* Review Text */
+.review-item p {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 10px;
+}
+.sort-reviews {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.sort-reviews label {
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.sort-reviews select {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border: 2px solid #28a745; /* Green border */
+    border-radius: 25px; /* Rounded corners */
+    background-color: #fff; /* White background */
+    color: #28a745; /* Green text */
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.sort-reviews select:hover {
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+}
+
+.sort-reviews select:focus {
+    border-color: #1e7e34; /* Darker green border on focus */
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Green glow */
+}
+/* Back Button */
+.back-btn {
+    bottom: 0.50in;
+    position: relative; /* Keep it in the flow of the content */
+    padding: 8px 15px;
+    color: green;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid #28a745;
+    display: inline-block;
+    margin-top: 1in; /* Add a gap between the button and content */
+    align-self: flex-start; /* Ensure the button aligns to the left */
+}
+
+.back-btn:hover {
+    background-color: white;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .review-container {
+        width: 95vw;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .submitting-stars {
+        gap: 8px;
+    }
+
+    .star {
+        font-size: 30px;
+    }
+
+    .previous-reviews {
+        margin-top: 30px;
+    }
+}

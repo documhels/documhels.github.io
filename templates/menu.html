@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='urve.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='restyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Menu - Eatery Recommendation</title>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('restaurant') }}">Restaurants</a></li>
+            <li><a href="{{ url_for('recommendation') }}">Recommendations</a></li>
+            <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+
+            <!-- Profile Section -->
+            <li class="profile-item">
+                <img src="{{ url_for('static', filename='eatlog.png') }}" alt="Profile Icon" class="profile-icon">
+                <a href="#" id="account-link">
+                    <span>{{ user_name if user_name else 'My Account' }}</span>
+                </a>
+                {% if user_name %}
+                <ul class="dropdown" id="account-dropdown">
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Menu Section -->
+    <section id="menu-section" class="section">
+        <div class="container">
+            <!-- Back Button -->
+            <a href="{{ request.referrer if request.referrer else url_for('restaurant') }}" class="back-btn">Back</a>
+
+            <!-- Restaurant Header -->
+            <div class="menu-header">
+                <h1>Menu for {{ restaurant[0] }}</h1>
+            </div>
+
+            <!-- See Reviews Button -->
+            <div class="restaurant-reviews">
+                <a href="{{ url_for('review', restaurant_id=restaurant_id) }}" class="see-reviews">See Reviews</a>
+            </div>
+
+            <!-- Menu Items -->
+            <div id="menu-container">
+                {% for category, items in categories.items() %}
+                    <h2 class="category-title">{{ category.capitalize() }}</h2>
+                    <div class="category-items">
+                        {% for item in items %}
+                            <div class="menu-item">
+                                <h3 class="menu-name">{{ item[1].capitalize() }}</h3>
+                                <p class="price">₱{{ item[2] }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('account-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('account-dropdown');
+            if (dropdown) {
+                dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "block" : "none";
+            }
+        });
+    </script>
+</body>
+</html>

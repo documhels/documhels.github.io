@@ -1,0 +1,473 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Verdana', sans-serif;
+    margin: 0;
+    padding-top: 60px; /* Account for fixed navbar height */
+    background: white;
+    color: #333;
+    min-height: 110vh;
+}
+
+
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: green;
+    padding: 10px 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Aligns content vertically */
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;  /* Centers the nav items horizontally */
+    align-items: center;      /* Aligns nav items vertically */
+    padding: 0;               /* Removes default padding */
+    margin: 0;                /* Removes default margin */
+}
+
+.navbar ul li {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* Links */
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+/* Hover Effect */
+.navbar ul li a:hover {
+    background-color: white;
+    color: green;
+    border-radius: 15px; /* Rounded corners on hover */
+}
+
+/* Profile Section */
+.profile-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Only highlight the username on hover */
+.profile-item a.username-link {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s, border-radius 0.3s;
+}
+
+/* Hover Effect for Username */
+.profile-item a.username-link:hover {
+    background-color: white;
+    color: green;
+    border-radius: 15px; /* Rounded corners on hover */
+}
+
+/* Active Effect for Username (when clicked) */
+.profile-item a.username-link:active {
+    background-color: white; /* Keep the same color when clicked */
+    color: green;            /* Keep the text color */
+    border-radius: 0;       /* Square corners when clicked */
+}
+
+/* Dropdown styling */
+#account-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border-radius: 15px;
+    background-color: white;
+    list-style-type: none;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+#account-dropdown li {
+    padding: 10px;
+}
+
+#account-dropdown li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#account-dropdown li a:hover {
+    border-radius: 15px;
+    background-color: #f0f0f0;
+}
+
+/* Logout Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    border-radius: 10px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+/* Intro Section Styling */
+.intro-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.text-content h1 {
+    color: green;  /* Make the heading green */
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-right: 20px;
+}
+
+.text-content p {
+    color: black;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Styling for the Discover Now button */
+.discover-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for Discover Now button */
+.discover-btn:hover {
+    background-color: #218838;
+}
+/* Content Section - Add space from the left */
+.content {
+    display: flex;
+    flex-direction: column;  /* Stack the logo and text vertically */
+    align-items: flex-start; /* Align items to the left */
+    justify-content: flex-start; /* Align items to the top */
+    margin-top: 100px;
+    text-align: left; /* Align text to the left */
+    width: 80%; /* You can adjust the width as needed */
+    margin-left: 1in; /* Adds approximately 1 inch of space from the left */
+}
+.top-restaurants-container {
+    margin-bottom: 0.75in; /* Adds a 0.75 inch gap below the Top 5 section */
+}
+
+/* Intro Container - Left-aligned layout with space */
+.intro-container {
+    display: flex;
+    justify-content: flex-start;  /* Align elements to the left */
+    align-items: flex-start;      /* Align items to the top */
+    width: 100%;
+}
+
+/* Text Content Styling */
+.text-content h1 {
+    color: green;
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-right: 20px;
+}
+
+.text-content p {
+    color: black;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Logo Container Styling */
+.logo-container {
+    margin-top: 20px; /* Optional: Add top margin for spacing */
+}
+
+.bouncing-logo {
+    width: 200px;
+    animation: bounce 2s infinite;
+}
+
+
+/* Bouncing Logo Animation */
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-50px); /* Move up 50px */
+    }
+    50% {
+        transform: translateY(0); /* Return to the original position */
+    }
+    75% {
+        transform: translateY(-30px); /* Slightly bounce */
+    }
+    100% {
+        transform: translateY(0); /* Back to the original position */
+    }
+}
+
+/* Intro Text Styling */
+.intro-text h1 {
+    color: green;  /* Green color for the heading */
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.intro-text p {
+    color: black;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.discover-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.discover-btn:hover {
+    background-color: #218838;
+}
+
+/* Top Rated Restaurants Section with Curved Box */
+#top-rated-restaurants {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.curved-box {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+#top-rated-restaurants h2 {
+    color: green;
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.restaurants-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.restaurant-card {
+    background-color: white;
+    border-radius: 15px;
+    width: 200px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.restaurant-info {
+    padding: 10px;
+    text-align: center;
+}
+
+.restaurant-info h3 {
+    font-size: 1.2em;
+    color: green;
+    margin-bottom: 10px;
+}
+
+.restaurant-info p {
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.restaurant-info .view-more {
+    text-decoration: none;
+    color: green;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.restaurant-info .view-more:hover {
+    color: #ff4d4d;
+}
+
+/* Hover Effect for Restaurant Cards */
+.restaurant-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.search-headline {
+    font-size: 2rem;
+    color: green;
+    margin-top: 50px; /* Add this line to create a gap from the top */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.search-container {
+    margin: 40px auto;
+    max-width: 800px;
+    text-align: center;
+    display: flex;
+}
+.search-button {
+    background-color: #28a745; /* Green button background */
+    color: white;
+    border: none;
+    padding: 10px ;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 50px; /* Make the search bar oval-shaped */
+    border: 2px solid green; /* Green border */
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-bar:focus {
+    border-color:lightgreen; /* Focus effect when the search bar is clicked */
+}
+#results-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9; /* Light gray background */
+    border: 1px solid #ddd; /* Border to outline the results area */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 800px; /* Match the width of the search container */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.restaurant-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Separator between items */
+    font-size: 1rem;
+    color: #333;
+}
+
+.restaurant-item:last-child {
+    border-bottom: none; /* Remove the border on the last item */
+}
+
+.restaurant-item h3 {
+    margin: 0;
+    color: #2c3e50; /* Darker color for the title */
+}
+
+.restaurant-item p {
+    margin: 5px 0;
+    color: #555; /* Gray for the description or details */
+}
+
+.no-results {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #888; /* Light gray for "no results" text */
+    margin: 20px 0;
+}
+
+.restaurant-item h3 {
+    color: green;
+}
+

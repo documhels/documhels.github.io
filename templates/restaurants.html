@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='urve.png') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='restau.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Restaurants - Eatery Recommendation</title>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('restaurant') }}">Restaurants</a></li>
+            <li><a href="/recommendation">Recommendations</a></li>
+            <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+
+
+            <li class="profile-item">
+                <img src="{{ url_for('static', filename='eatlog.png') }}" alt="Profile Icon" class="profile-icon">
+                <a href="#" id="account-link">
+                    <span>{{ user_name if user_name else 'My Account' }}</span>
+                </a>
+                {% if user_name %}
+                <ul class="dropdown" id="account-dropdown">
+                    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Restaurants Section -->
+    <section id="restaurants" class="section">
+        <h1>List of Restaurants</h1>
+        
+        <!-- Sorting Dropdown -->
+        <div class="sorting-container">
+            <label for="sort-options">Sort by Price: </label>
+            <select id="sort-options" onchange="sortRestaurants(this.value)">
+                <option value="none" {% if sort_choice == 'none' %}selected{% endif %}>None</option>
+                <option value="asc" {% if sort_choice == 'asc' %}selected{% endif %}>Least Expensive</option>
+                <option value="desc" {% if sort_choice == 'desc' %}selected{% endif %}>Most Expensive</option>
+            </select>
+        </div>
+        
+        <!-- Restaurant Cards Container -->
+        <div class="restaurants-container" id="restaurants-container">
+            {% for restaurant in restaurants %}
+                <div class="restaurant-card" data-price="{{ restaurant[4] }}">
+                    <a href="{{ url_for('menu', restaurant_id=restaurant[0]) }}" class="restaurant-card-link">
+                        {% if restaurant[2] %}
+                            <img src="{{ url_for('static', filename=restaurant[2]) }}" alt="{{ restaurant[1] }}">
+                        {% endif %}
+                        <div class="name">
+                            <span>{{ restaurant[1] }}</span>
+                        </div>
+                    </a>
+
+                    <!-- Favorite Button -->
+                    <div class="favorite-btn">
+                        <i 
+                            class="fas fa-heart{{ ' favorited' if restaurant[3] else '' }}" 
+                            data-restaurant-id="{{ restaurant[0] }}"
+                            data-favorited="{{ 'true' if restaurant[3] else 'false' }}"
+                            style="cursor: pointer; color: {{ 'red' if restaurant[3] else 'gray' }};">
+                        </i>
+                    </div>
+                    <!-- Restaurant Price -->
+                    <div class="price">Average Price: {{ restaurant[4] }}</div>
+                </div>
+            {% else %}
+                <p>No restaurants found.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <script>
+        // Function to reload the page with the selected sort option
+        function sortRestaurants(sortOption) {
+            let url = new URL(window.location.href);
+            url.searchParams.set('sort', sortOption);
+            window.location.href = url.toString();
+        }
+
+        // Handle heart button click for favoriting
+        document.querySelectorAll('.fa-heart').forEach(heart => {
+            heart.addEventListener('click', async function () {
+                const restaurantId = this.dataset.restaurantId;
+                const isFavorited = this.dataset.favorited === 'true';
+    
+                try {
+                    // Send POST or DELETE request based on current state
+                    const response = await fetch('/restaurants', {
+                        method: isFavorited ? 'DELETE' : 'POST',  // Toggle based on current state
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ restaurant_id: restaurantId }),
+                    });
+    
+                    const result = await response.json();
+    
+                    if (response.ok) {
+                        // Toggle the heart color and favorited state
+                        if (isFavorited) {
+                            this.style.color = 'gray';  // Turn the heart gray (unfavorited)
+                            this.dataset.favorited = 'false';
+                        } else {
+                            this.style.color = 'red';   // Turn the heart red (favorited)
+                            this.dataset.favorited = 'true';
+                        }
+                    } else {
+                        console.error(result.error || 'Failed to update favorite status');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        // Handle search bar Enter key press for navigation
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const inputText = document.querySelector('.search-bar').value;
+                window.location.href = `/restaurants?search=${encodeURIComponent(inputText)}`;
+            }
+        }
+    </script>
+
+</body>
+</html>

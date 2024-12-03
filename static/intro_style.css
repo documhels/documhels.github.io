@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('ra.gif') no-repeat center center fixed;
+    background-size: cover; 
+}
+
+.intro-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 50%; /* Set a percentage or fixed size, e.g., 80% of the parent container or 600px */
+    height: 200px; /* Set a fixed height or use auto for dynamic content */
+    padding: 20px; /* Adjust padding for spacing */
+    margin: 0 auto; /* Center the container */
+}
+
+.start-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: green; 
+    color: white; /* Button text color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Round the corners */
+    transition: background 0.3s; /* Smooth transition */
+}
+
+.start-button:hover {
+    background-color: darkgreen; /* Darker shade on hover */
+}
+
